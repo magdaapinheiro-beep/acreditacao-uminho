@@ -3,78 +3,62 @@
 Página de consulta do estado de avaliação e acreditação institucional e dos
 ciclos de estudos da Universidade do Minho junto da A3ES e da DGES.
 
+**Página publicada:** <https://magdaapinheiro-beep.github.io/acreditacao-uminho/>
+
 > **Protótipo de investigação.** Trabalho de Projeto do Mestrado em Direção
-> Intermédia na Administração Pública (EEG, UMinho). Não é uma página oficial
-> da Universidade do Minho. A faixa que o indica no topo da página deve ser
+> Intermédia na Administração Pública (UMinho). Não é uma página oficial da
+> Universidade do Minho. A faixa que o indica no topo da página deve ser
 > mantida em qualquer publicação.
 
-## Estrutura
+Só são publicados os ciclos das unidades orgânicas que autorizaram a
+divulgação, isto é, os que constam do levantamento em vigor na pasta `fontes/`.
 
+## Ficheiros
+
+| Item | Para que serve |
+|------|----------------|
+| `fontes/` | **O levantamento do NACC em vigor** (Excel). É a fonte oficial: o que não consta daqui não é publicado. Deve estar aqui só um levantamento. |
+| `deliberacoes/` | PDF das deliberações da A3ES (opcional), cada um com o nome do n.º de processo (ex.: `ACEF_2425_1000796.pdf`). |
+| `correcoes.csv` | Erros conhecidos do levantamento ainda não corrigidos na origem: `proc;campo;valor;motivo`. Aplicados a cada atualização. |
+| `dados.csv`, `institucional.csv` | Tabela consolidada (gerada a partir de `fontes/`; não é preciso editar). |
+| `atualizar.py` | Lê o levantamento e os PDF, verifica os dados e consolida-os. |
+| `importar_tabela.py`, `importar_pdf.py` | Importação do Excel/CSV e dos PDF (chamados pelo `atualizar.py`). |
+| `publicar_web.py` | Produz o `index.html` publicado (cabeçalho com o logótipo, indicação de protótipo, botão «Copiar tabela»). |
+| `template.html`, `logo_uminho.png` | Modelo da página e logótipo. |
+| `index.html` | **A página publicada** (gerada; não editar à mão). |
+| `.github/workflows/gerar-pagina.yml` | Refaz a página no GitHub sempre que os dados mudam. |
+
+## Atualizar a página (sem instalar nada)
+
+1. No GitHub, abrir a pasta `fontes/`, apagar o levantamento anterior e
+   carregar o novo (*Add file → Upload files*).
+2. A ação **Gerar página** corre sozinha: importa o levantamento, verifica-o,
+   refaz o `index.html` e grava-o. Em cerca de um minuto a página fica
+   atualizada, com a data do dia.
+3. Ver o **relatório de verificação** no separador *Actions* → última execução:
+   ciclos sem ligação à A3ES/DGES, ligações trocadas (corrigidas sozinhas),
+   correções registadas aplicadas e ciclos retirados. O que for assinalado
+   deve ser corrigido no levantamento de origem.
+
+## Atualizar no computador (alternativa)
+
+```bash
+pip install -r requirements.txt        # só da primeira vez
+python3 atualizar.py && python3 publicar_web.py
 ```
-acreditacao-uminho/
-├── index.html                    ← página final (gerada; é o que o GitHub Pages publica)
-├── dados/
-│   ├── acreditacao_uminho.xlsx   ← FONTE DE DADOS: é aqui que se edita
-│   └── fonte/                    ← levantamento original do NACC (referência)
-├── modelo/pagina.html            ← modelo da página (aspeto, gráficos, filtros)
-├── assets/logo-uminho.png        ← logótipo, embutido na página ao gerar
-├── scripts/
-│   ├── gerar_pagina.py           ← Excel + modelo → index.html
-│   └── colunas.py                ← correspondência colunas do Excel ↔ campos
-├── docs/
-│   ├── PROCESSO.md               ← como a página foi construída
-│   └── historico/                ← versões e documentos anteriores
-└── .github/workflows/gerar-pagina.yml  ← regenera a página no GitHub
-```
 
-## Atualizar os dados
+Abrir `index.html` no navegador para confirmar e depois fazer commit/push.
+Antes de editar localmente, fazer `git pull` (a ação grava commits próprios).
 
-1. Abrir `dados/acreditacao_uminho.xlsx` e editar as folhas **Ciclos** e/ou
-   **Institucional** (uma linha por registo; não alterar os cabeçalhos).
-   A folha **Leia-me** tem o dicionário de dados.
-2. Na folha **Configuração**, pôr a data de atualização (célula amarela).
-3. Gerar a página:
+## Validação humana
 
-   ```bash
-   pip install -r requirements.txt     # só da primeira vez
-   python3 scripts/gerar_pagina.py
-   ```
-
-4. Abrir `index.html` no browser para confirmar e fazer commit/push.
-
-Se o repositório estiver no GitHub, o passo 3 é opcional: basta carregar o
-Excel novo (pelo site do GitHub, em *Add file → Upload files*, ou por push) e
-a ação `Gerar página` regenera o `index.html` sozinha.
-
-## Publicar no GitHub Pages
-
-1. Criar um repositório no GitHub (ex.: `acreditacao-uminho`) e enviar esta pasta:
-
-   ```bash
-   cd acreditacao-uminho
-   git init -b main
-   git add .
-   git commit -m "Versão inicial"
-   git remote add origin https://github.com/<utilizador>/acreditacao-uminho.git
-   git push -u origin main
-   ```
-
-   (Em alternativa, usar o GitHub Desktop: *Add existing repository* → esta pasta → *Publish*.)
-2. No repositório: **Settings → Pages → Build and deployment → Source: Deploy
-   from a branch → Branch: `main` / `(root)`** → *Save*.
-3. Em **Settings → Actions → General → Workflow permissions**, escolher
-   *Read and write permissions* (para a ação poder gravar o `index.html`).
-4. A página fica em `https://<utilizador>.github.io/acreditacao-uminho/`.
-
-## Mudar o aspeto da página
-
-O aspeto, os textos fixos, os gráficos e os filtros estão em
-`modelo/pagina.html`. Os dados entram no marcador `/*__DADOS__*/` e o
-logótipo no marcador `__LOGO__` — não os apagar. Depois de editar o modelo,
-correr de novo `scripts/gerar_pagina.py`.
+O automatismo acelera a publicação mas não dispensa a validação: ciclos
+importados de PDF ficam com `validado=nao` em `dados.csv` até serem
+conferidos por uma pessoa. O registo da DGES não consta das deliberações da
+A3ES e tem de vir do levantamento.
 
 ## Fontes
 
 - A3ES — consulta pública de processos: <https://si.a3es.pt>
 - DGES — registo de ciclos de estudos: <https://www.dges.gov.pt>
-- Levantamento do NACC (UMinho), em `dados/fonte/`.
+- Levantamento do NACC (UMinho), em `fontes/`.

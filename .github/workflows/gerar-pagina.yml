@@ -1,15 +1,21 @@
-# Sempre que o Excel (ou o modelo, o logótipo ou os scripts) muda no GitHub,
-# regenera o index.html e grava-o no repositório. O GitHub Pages publica-o.
+# Sempre que o levantamento (ou os dados, os PDF, o modelo ou os scripts)
+# muda no GitHub, refaz a página e grava-a no repositório. O GitHub Pages publica-a.
+# O relatório de verificação (links em falta, links trocados, correções
+# aplicadas, ciclos retirados) fica no resumo de cada execução, no separador Actions.
 name: Gerar página
 
 on:
   push:
     branches: [main]
     paths:
-      - "dados/**"
-      - "modelo/**"
-      - "assets/**"
-      - "scripts/**"
+      - "fontes/**"
+      - "deliberacoes/**"
+      - "dados.csv"
+      - "institucional.csv"
+      - "correcoes.csv"
+      - "template.html"
+      - "logo_uminho.png"
+      - "*.py"
   workflow_dispatch:
 
 permissions:
@@ -24,13 +30,20 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - run: python3 scripts/gerar_pagina.py
-      - name: Gravar index.html se mudou
+      - name: Verificar os dados e refazer a página
+        env:
+          TZ: Europe/Lisbon
         run: |
-          if ! git diff --quiet -- index.html; then
+          set -o pipefail
+          python3 atualizar.py | tee relatorio.txt
+          python3 publicar_web.py
+          { echo '### Relatório da atualização'; echo '```'; cat relatorio.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Gravar a página e os dados se mudaram
+        run: |
+          git add index.html dados.csv institucional.csv
+          if ! git diff --cached --quiet; then
             git config user.name "github-actions[bot]"
             git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-            git add index.html
-            git commit -m "Regenerar index.html a partir do Excel"
+            git commit -m "Atualizar página a partir do levantamento"
             git push
           fi

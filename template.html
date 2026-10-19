@@ -54,7 +54,7 @@
   .note b{font-weight:700;color:var(--brand)}
 
   /* ---------- KPI strip ---------- */
-  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:26px 0 30px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-top:3px solid var(--brand);border-radius:6px;overflow:hidden;margin:26px 0 30px}
   .kpi{background:var(--panel);padding:18px 18px 15px}
   .kpi .n{font-weight:700;font-size:34px;line-height:1;letter-spacing:-.01em}
   .kpi .l{font-size:12.5px;color:var(--muted);margin-top:7px;line-height:1.35}
@@ -101,31 +101,51 @@
   .valtxt{font-family:var(--mono);font-size:12px;white-space:nowrap}
   .valtxt .rest{color:var(--muted)}
 
-  /* ---------- alternador de vista (lista / gráficos) ---------- */
+  /* ---------- alternador de vista (lista / panorama) ---------- */
   .viewtabs{display:flex;gap:4px;margin:8px 0 0}
-  .viewtabs button{font:inherit;font-size:13.5px;font-weight:600;padding:9px 16px;cursor:pointer;
-    border:1px solid var(--line-strong);border-bottom:none;border-radius:4px 4px 0 0;
-    background:#F4F4F4;color:var(--muted)}
+  .viewtabs button{font:inherit;font-size:14px;font-weight:600;padding:10px 18px;cursor:pointer;
+    border:1px solid var(--line-strong);border-bottom:none;border-radius:5px 5px 0 0;
+    background:#F4F4F4;color:var(--muted);transition:background .12s,color .12s}
+  .viewtabs button:hover{background:#EDEDED;color:var(--ink)}
   .viewtabs button[aria-selected=true]{background:var(--panel);color:var(--brand);
     border-color:var(--line-strong);box-shadow:inset 0 3px 0 var(--brand)}
+  .viewtabs button[aria-selected=true]:hover{background:var(--panel)}
+  .vbadge{display:inline-block;margin-left:8px;font-size:11.5px;font-weight:700;line-height:1.6;
+    padding:0 8px;border-radius:99px;background:var(--neutral-soft);color:var(--muted);font-variant-numeric:tabular-nums}
+  .viewtabs button[aria-selected=true] .vbadge{background:var(--brand-soft);color:var(--brand)}
   .viewtabs+.filters{border-top:1px solid var(--line-strong);padding-top:14px}
+
+  /* leitura rápida do panorama — o que os gráficos abaixo dizem, em prosa */
+  .lead{background:var(--brand-soft);border:1px solid #EAD7D8;border-left:4px solid var(--brand);
+    border-radius:6px;padding:15px 20px 16px;margin-top:16px}
+  .lead .leadlab{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--brand);margin-bottom:7px}
+  .lead p{font-size:14.5px;line-height:1.6;color:var(--ink);max-width:none}
+  .lead p+p{margin-top:7px}
+  .lead b{font-weight:700}
 
   /* ---------- gráficos ----------
      Codificação de cor (rampa validada sobre superfície #FFFFFF):
        - grau académico = escala ordinal de um só tom (claro->escuro segue o nível);
        - restantes séries = um só tom, porque o comprimento da barra já dá a grandeza.
      O texto nunca veste a cor da série: usa sempre tokens de texto. */
-  .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px;margin-top:16px;align-items:start}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px 20px 20px}
+  .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:18px;margin-top:18px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px 20px 20px;
+    transition:box-shadow .14s ease,border-color .14s ease}
+  .card:hover{box-shadow:0 2px 12px rgba(43,43,43,.07);border-color:var(--line-strong)}
   .card.wide{grid-column:1/-1}
-  .card h3{font-size:14.5px;font-weight:700;color:#333}
-  .card .csub{font-size:12.5px;color:var(--muted);margin:3px 0 0;line-height:1.45}
+  .card h3{font-size:14.5px;font-weight:700;color:#333;padding-bottom:9px;border-bottom:1px solid var(--line)}
+  .card .csub{font-size:12.5px;color:var(--muted);margin:9px 0 0;line-height:1.45}
   .card .cbody{margin-top:16px}
 
   /* separador de secção dentro da grelha de gráficos */
-  .gsec{grid-column:1/-1;margin-top:12px;padding-top:22px;border-top:1px solid var(--line-strong)}
-  .gsec h3{font-size:15.5px;font-weight:700;color:#333}
-  .gsec p{font-size:13px;color:var(--muted);margin-top:4px;max-width:860px;line-height:1.5}
+  .gsec{grid-column:1/-1;margin-top:16px;padding-top:24px;border-top:2px solid var(--brand)}
+  .gsec:first-child{margin-top:0;padding-top:0;border-top:none}
+  .gsec .gnum{display:inline-flex;width:25px;height:25px;border-radius:99px;background:var(--brand);
+    color:#fff;font-size:13px;font-weight:700;align-items:center;justify-content:center;
+    margin-right:11px;vertical-align:-5px;font-variant-numeric:tabular-nums}
+  .gsec h3{display:inline;font-size:16.5px;font-weight:700;color:#333;letter-spacing:-.005em}
+  .gsec p{font-size:13px;color:var(--muted);margin-top:6px;max-width:880px;line-height:1.55}
 
   .legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-size:12.5px;color:var(--muted)}
   .legend span{display:inline-flex;align-items:center;gap:7px}
@@ -198,9 +218,13 @@
   /* lista de próximas a expirar */
   .watch{list-style:none;margin:4px 0 0;padding:0}
   .watch li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;
-    padding:11px 0;border-bottom:1px solid var(--line)}
+    padding:11px 0;border-bottom:1px solid var(--line);break-inside:avoid}
   .watch li:last-child{border-bottom:none}
+  /* listas longas em cartão de largura total: duas colunas, se houver espaço */
+  @media (min-width:900px){ .watch.dois{columns:2;column-gap:36px} }
   .watch .wd{grid-column:1;font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+  /* motivo em prosa (ciclos sob acompanhamento): não é um número, não leva mono */
+  .watch .wmot{font-family:var(--sans);font-size:12px;white-space:normal}
   .watch .wn{grid-column:1;font-weight:600;font-size:13.5px;line-height:1.3}
   .watch .wu{grid-column:1;font-size:12px;color:var(--muted)}
   .watch .wr{grid-column:2;grid-row:1/span 3;align-self:center;font-size:12px;font-weight:700;white-space:nowrap;
@@ -269,7 +293,7 @@
 
   <div class="viewtabs" role="tablist" aria-label="Forma de apresentação">
     <button type="button" role="tab" id="tabLista" aria-controls="viewLista" aria-selected="true">Lista</button>
-    <button type="button" role="tab" id="tabGraf" aria-controls="viewGraf" aria-selected="false">Gráficos</button>
+    <button type="button" role="tab" id="tabGraf" aria-controls="viewGraf" aria-selected="false">Panorama da oferta<span class="vbadge" id="nGraf">14</span></button>
   </div>
 
   <div class="filters">
@@ -282,12 +306,66 @@
   </div>
 
   <section id="viewGraf" role="tabpanel" aria-labelledby="tabGraf" hidden>
+
+    <div class="lead" id="gLead"></div>
+
     <div class="charts">
+
+      <div class="gsec">
+        <span class="gnum">1</span><h3>Retrato da oferta</h3>
+        <p>Quanta oferta está abrangida, de que graus e em que unidades orgânicas. É o denominador de tudo o que se segue.</p>
+      </div>
+
+      <div class="card">
+        <h3>Oferta por unidade orgânica</h3>
+        <p class="csub">Número de ciclos de estudos de cada unidade orgânica, do maior para o menor. Dá a dimensão relativa de cada escola ou instituto dentro da oferta abrangida.</p>
+        <div class="cbody" id="gUO"></div>
+      </div>
+
+      <div class="card">
+        <h3>Repartição por grau</h3>
+        <p class="csub">Ciclos por grau académico, do 1.º ao 3.º ciclo. A tonalidade acompanha o nível do grau — não a quantidade.</p>
+        <div class="cbody" id="gGrau"></div>
+      </div>
+
+      <div class="card wide">
+        <h3>Distribuição por escola e grau</h3>
+        <p class="csub">Número de ciclos em cada cruzamento de unidade orgânica e grau académico. Célula mais escura, mais ciclos. Passe o cursor sobre uma célula para o detalhe.</p>
+        <div class="cbody" id="gHeat"></div>
+      </div>
+
+      <div class="gsec">
+        <span class="gnum">2</span><h3>Situação da acreditação</h3>
+        <p>O que a A3ES decidiu sobre cada ciclo e com que solidez: acreditação plena, condicionada ou recusada, e a duração do prazo atribuído.</p>
+      </div>
 
       <div class="card wide">
         <h3>Situação da acreditação</h3>
         <p class="csub">Repartição de toda a oferta abrangida pela situação de cada ciclo perante a A3ES: acreditação plena, acreditação condicionada — quando há condições a suprir — ou não acreditação. A barra dá a proporção; a lista dá o número exato de ciclos em cada situação, incluindo as que estão a zero.</p>
         <div class="cbody" id="gEstado"></div>
+      </div>
+
+      <div class="card">
+        <h3>Solidez da acreditação</h3>
+        <p class="csub">Proporção de ciclos com o prazo máximo de 6 anos, atribuído quando não há condições a suprir. Um prazo mais curto assinala uma acreditação sujeita a reavaliação antecipada.</p>
+        <div class="cbody" id="gSolidez"></div>
+      </div>
+
+      <div class="card">
+        <h3>Ciclos sob acompanhamento</h3>
+        <p class="csub">Os ciclos que não têm acreditação plena pelo prazo máximo — por terem condições a suprir ou um prazo reduzido. São os que exigem trabalho antes da renovação ordinária.</p>
+        <div class="cbody" id="gVig"></div>
+      </div>
+
+      <div class="card">
+        <h3>Em que ponto vai o prazo</h3>
+        <p class="csub">Quanto do prazo atribuído a cada ciclo já decorreu, à data de hoje. Distingue a oferta acabada de acreditar da que já entrou na reta final e vai ter de preparar novo processo.</p>
+        <div class="cbody" id="gFase"></div>
+      </div>
+
+      <div class="gsec">
+        <span class="gnum">3</span><h3>Calendário de renovações</h3>
+        <p>Quando é que cada acreditação caduca. Os gráficos seguintes dizem o mesmo por ordem de aproximação: o ano, quem renova no ano mais carregado, quanto tempo falta, a cobertura acumulada, a agenda de cada escola e, por fim, os próximos ciclos da fila.</p>
       </div>
 
       <div class="card wide">
@@ -308,26 +386,26 @@
         <div class="cbody" id="gUrg"></div>
       </div>
 
+      <div class="card">
+        <h3>Carga acumulada de renovações</h3>
+        <p class="csub">Ciclos cuja acreditação já terá caducado até ao fim de cada ano, somados desde o primeiro. Responde a «até quando está a oferta coberta», que a contagem ano a ano não responde.</p>
+        <div class="cbody" id="gAcum"></div>
+      </div>
+
       <div class="card wide">
-        <h3>Distribuição por escola e grau</h3>
-        <p class="csub">Número de ciclos em cada cruzamento de unidade orgânica e grau académico. Célula mais escura, mais ciclos. Passe o cursor sobre uma célula para o detalhe.</p>
-        <div class="cbody" id="gHeat"></div>
+        <h3>Calendário por unidade orgânica</h3>
+        <p class="csub">Ciclos a renovar em cada ano, escola a escola. É a agenda de trabalho de cada unidade orgânica: célula mais escura, mais processos a preparar nesse ano.</p>
+        <div class="cbody" id="gCal"></div>
       </div>
 
-      <div class="card">
-        <h3>Solidez da acreditação</h3>
-        <p class="csub">Proporção de ciclos com o prazo máximo de 6 anos, atribuído quando não há condições a suprir. Um prazo mais curto assinala uma acreditação sujeita a reavaliação antecipada.</p>
-        <div class="cbody" id="gSolidez"></div>
-      </div>
-
-      <div class="card">
+      <div class="card wide">
         <h3>Próximas acreditações a expirar</h3>
         <p class="csub">Os ciclos com prazo mais curto — a fila de renovação mais imediata.</p>
-        <div class="cbody"><ol class="watch" id="gWatch"></ol></div>
+        <div class="cbody"><ol class="watch dois" id="gWatch"></ol></div>
       </div>
 
       <div class="gsec">
-        <h3>Indicadores complementares</h3>
+        <span class="gnum">4</span><h3>O processo e a informação pública</h3>
         <p>Os gráficos anteriores descrevem o <b>estado</b> de cada ciclo. Os seguintes descrevem o <b>processo</b> que lá chegou e a <b>informação</b> que dele é tornada pública — que é, ela própria, uma medida de transparência.</p>
       </div>
 
@@ -338,12 +416,24 @@
       </div>
 
       <div class="card">
+        <h3>Quando foi decidida a acreditação em vigor</h3>
+        <p class="csub">Ano da deliberação da A3ES que está na origem da acreditação atualmente em vigor. Mostra em que anos se concentrou o esforço de avaliação que sustenta a oferta de hoje.</p>
+        <div class="cbody" id="gDecisao"></div>
+      </div>
+
+      <div class="card">
         <h3>Da decisão ao registo</h3>
         <p class="csub">Tempo decorrido entre a deliberação da A3ES e o registo do ciclo na DGES — o intervalo em que a decisão já foi tomada mas ainda não está refletida no registo público.</p>
         <div class="cbody" id="gLatencia"></div>
       </div>
 
-      <div class="card">
+      <div class="card wide">
+        <h3>Oferta criada de novo</h3>
+        <p class="csub">Ciclos cuja acreditação em vigor resultou de um pedido de acreditação prévia (NCE) — isto é, oferta que não existia e foi criada, e não oferta antiga renovada. Mostra por onde tem crescido a Universidade.</p>
+        <div class="cbody" id="gNova"></div>
+      </div>
+
+      <div class="card wide">
         <h3>Completude da informação</h3>
         <p class="csub">Proporção de ciclos com cada campo preenchido. Um campo em falta é informação que existe mas não chega a quem consulta — a página mede-se a si própria.</p>
         <div class="cbody" id="gCompl"></div>
@@ -380,1003 +470,18 @@
 <div class="tip" id="tip" role="status" aria-live="polite"></div>
 
 <script>
-const META = { atualizado: "2026-07-28", geradoEm: "2026-07-28 15:43" };
+const META = { atualizado: "__ATUALIZADO__", geradoEm: "__GERADO__" };
 
-const INSTITUCIONAL = [
- {
-  "entidade": "Universidade do Minho",
-  "tipo": "Acreditacao institucional (A3ES)",
-  "estado": "Acreditado",
-  "nivel": "ok",
-  "validade": "2023-2029",
-  "ref": "AINST/22/2200082",
-  "linkA3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=732",
-  "linkDges": "https://www.dges.gov.pt/simges/public/www/detalhes_ies/9"
- }
-];
+const INSTITUCIONAL = __INSTITUCIONAL__;
 
-const CICLOS = [
- {
-  "nome": "Criminologia e Justiça Criminal",
-  "grau": "Licenciatura",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2526/1200076",
-  "dataDecisao": "2026-03-24",
-  "anos": 6,
-  "fim": "2032-07-31",
-  "registo": "R/A-Cr 146/2013/AL02",
-  "dataRegisto": "2026-05-08",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=28010",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/17670",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Direito",
-  "grau": "Licenciatura",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202227",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2421/2011/AL03",
-  "dataRegisto": "2025-05-21",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26055",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14559",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Ciências Criminais",
-  "grau": "Mestrado",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1800124",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 70/2019",
-  "dataRegisto": "2019-11-14",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26804",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/6760",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Direito Administrativo",
-  "grau": "Mestrado",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1000796",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 107/2011/AL02",
-  "dataRegisto": "2025-05-20",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26514",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14547",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Direito da União Europeia",
-  "grau": "Mestrado",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202257",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2473/2011/AL02",
-  "dataRegisto": "2025-05-15",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26060",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14514",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Direito das Crianças, Família e Sucessões",
-  "grau": "Mestrado",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1200081",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 97/2013/AL02",
-  "dataRegisto": "2025-05-21",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26560",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14562",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Direito dos Contratos e da Empresa",
-  "grau": "Mestrado",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202247",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2475/2011/AL02",
-  "dataRegisto": "2026-05-21",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26058",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14568",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Direito dos Negócios Europeu e Transnacional",
-  "grau": "Mestrado",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1101041",
-  "dataDecisao": "2025-06-03",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 35/2012/AL02",
-  "dataRegisto": "2025-06-26",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26546",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/15203",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Direito e Informática",
-  "grau": "Mestrado",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1000791",
-  "dataDecisao": "2025-06-03",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 191/2011/AL04",
-  "dataRegisto": "2025-06-26",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26513",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/15200",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Direito Judiciário (Direitos Processuais e Organização Judiciária)",
-  "grau": "Mestrado",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202242",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2476/2011/AL02",
-  "dataRegisto": "2025-05-21",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26057",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14565",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Direito Transnacional da Empresa e das Tecnologias Digitais",
-  "grau": "Mestrado",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "NCE/20/2000160",
-  "dataDecisao": "2025-11-10",
-  "anos": 6,
-  "fim": "2027-07-31",
-  "registo": "R/A-Cr 277/2021",
-  "dataRegisto": "2021-08-14",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=25402",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/7489",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Direito Tributário",
-  "grau": "Mestrado",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202252",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2477/2011/AL03",
-  "dataRegisto": "2025-05-15",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26059",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14517",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Direitos Humanos",
-  "grau": "Mestrado",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202232",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2478/2011/AL02",
-  "dataRegisto": "2025-05-16",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26056",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14538",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Ciências Criminais",
-  "grau": "Doutoramento",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "NCE/23/2300281",
-  "dataDecisao": "2024-07-17",
-  "anos": 6,
-  "fim": "2030-07-31",
-  "registo": "R/A-Cr 115/2024",
-  "dataRegisto": "2024-07-26",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=1028",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/12212",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Ciências Jurídicas",
-  "grau": "Doutoramento",
-  "uo": "ED — Escola de Direito",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202267",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2391/2011/AL02",
-  "dataRegisto": "2025-05-21",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26061",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14556",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Artes Visuais",
-  "grau": "Licenciatura",
-  "uo": "EAAD — Escola de Arquitetura, Arte e Design",
-  "estado": "Acreditado",
-  "proc": "ACEF/2122/1600040",
-  "dataDecisao": "2022-10-19",
-  "anos": 6,
-  "fim": "2028-07-31",
-  "registo": "R/A-Cr 65/2017/AL01",
-  "dataRegisto": "2023-03-30",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=24745",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/15910",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Design de Produto",
-  "grau": "Licenciatura",
-  "uo": "EAAD — Escola de Arquitetura, Arte e Design",
-  "estado": "Acreditado",
-  "proc": "ACEF/2021/1101021",
-  "dataDecisao": "2023-07-26",
-  "anos": 6,
-  "fim": "2027-07-31",
-  "registo": "R/A-Cr 65/2012/AL01",
-  "dataRegisto": "2023-08-16",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=23735",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/16155",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Arquitetura",
-  "grau": "Mestrado Integrado",
-  "uo": "EAAD — Escola de Arquitetura, Arte e Design",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0201767",
-  "dataDecisao": "2025-03-26",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2558/2011/AL02",
-  "dataRegisto": "2025-05-28",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26043",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14733",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Design de Produto e Serviços",
-  "grau": "Mestrado",
-  "uo": "EAAD — Escola de Arquitetura, Arte e Design",
-  "estado": "Acreditado",
-  "proc": "PERA/2223/1600041",
-  "dataDecisao": "2024-03-13",
-  "anos": 4,
-  "fim": "2027-07-31",
-  "registo": "R/A-Cr 75/2017/AL01",
-  "dataRegisto": "2024-04-04",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=27578",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/11754",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Arquitetura",
-  "grau": "Doutoramento",
-  "uo": "EAAD — Escola de Arquitetura, Arte e Design",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0201772",
-  "dataDecisao": "2025-03-26",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2377/2011/AL02",
-  "dataRegisto": "2025-05-13",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26044",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14454",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Enfermagem",
-  "grau": "Licenciatura",
-  "uo": "ESE — Escola Superior de Enfermagem",
-  "estado": "Acreditado",
-  "proc": "ACEF/2122/0501797",
-  "dataDecisao": "2023-05-11",
-  "anos": 6,
-  "fim": "2028-07-31",
-  "registo": "R/A-Ef 2569/2011/AL03",
-  "dataRegisto": "2023-05-18",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=22472",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/16262",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Enfermagem Comunitária na Área de Enfermagem de Saúde Familiar",
-  "grau": "Mestrado",
-  "uo": "ESE — Escola Superior de Enfermagem",
-  "estado": "Acreditado",
-  "proc": "NCE/23/2300057",
-  "dataDecisao": "2024-04-24",
-  "anos": 6,
-  "fim": "2030-07-31",
-  "registo": "R/A-Cr 74/2024",
-  "dataRegisto": "2024-05-24",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=804",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/11949",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Enfermagem de Reabilitação",
-  "grau": "Mestrado",
-  "uo": "ESE — Escola Superior de Enfermagem",
-  "estado": "Acreditado",
-  "proc": "NCE/22/2200210",
-  "dataDecisao": "2023-10-18",
-  "anos": 6,
-  "fim": "2029-07-31",
-  "registo": "R/A-Cr 140/2023",
-  "dataRegisto": "2023-11-04",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=210",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/11290",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Enfermagem de Saúde Infantil e Pediátrica",
-  "grau": "Mestrado",
-  "uo": "ESE — Escola Superior de Enfermagem",
-  "estado": "Acreditado",
-  "proc": "NCE/23/2300055",
-  "dataDecisao": "2024-04-24",
-  "anos": 6,
-  "fim": "2030-07-31",
-  "registo": "R/A-Cr 73/2024",
-  "dataRegisto": "2024-05-24",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=802",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/11946",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Enfermagem Médico-cirúrgica, na Área de Enfermagem à Pessoa em Situação Crítica",
-  "grau": "Mestrado",
-  "uo": "ESE — Escola Superior de Enfermagem",
-  "estado": "Acreditado",
-  "proc": "NCE/22/2200211",
-  "dataDecisao": "2023-07-26",
-  "anos": 6,
-  "fim": "2029-07-31",
-  "registo": "R/A-Cr 101/2023",
-  "dataRegisto": "2023-09-13",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=211",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/11159",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Medicina",
-  "grau": "Mestrado Integrado",
-  "uo": "EM — Escola de Medicina",
-  "estado": "Acreditado",
-  "proc": "PERA/2526/1900124",
-  "dataDecisao": "2026-05-12",
-  "anos": 2,
-  "fim": "2028-07-31",
-  "registo": "R/A-Cr 64/2021/AL01",
-  "dataRegisto": "2026-05-21",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=28096",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/17725",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Biomedicina",
-  "grau": "Mestrado",
-  "uo": "EM — Escola de Medicina",
-  "estado": "Acreditado",
-  "proc": "NCE/22/2200198",
-  "dataDecisao": "2024-02-21",
-  "anos": 6,
-  "fim": "2029-07-31",
-  "registo": "R/A-Cr 48/2024",
-  "dataRegisto": "2024-03-26",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=198",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/11715",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Medicina",
-  "grau": "Doutoramento",
-  "uo": "EM — Escola de Medicina",
-  "estado": "Acreditado",
-  "proc": "NCE/22/2200540",
-  "dataDecisao": "2024-02-21",
-  "anos": 6,
-  "fim": "2029-07-31",
-  "registo": "R/A-Cr 51/2024",
-  "dataRegisto": "2024-03-27",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=540",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/11724",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Biomedicina e Ciências da Saúde",
-  "grau": "Doutoramento",
-  "uo": "EM — Escola de Medicina",
-  "estado": "Acreditado",
-  "proc": "NCE/22/2200455",
-  "dataDecisao": "2024-02-21",
-  "anos": 6,
-  "fim": "2029-07-31",
-  "registo": "R/A-Cr 49/2024",
-  "dataRegisto": "2024-03-26",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=455",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/11718",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Psicologia",
-  "grau": "Licenciatura",
-  "uo": "EP — Escola de Psicologia",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1901002",
-  "dataDecisao": "2025-07-08",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 103/2021/AL01",
-  "dataRegisto": "2025-07-17",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26864",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/15559",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Cognição Humana",
-  "grau": "Mestrado",
-  "uo": "EP — Escola de Psicologia",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1901003",
-  "dataDecisao": "2025-03-07",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 102/2021/AL01",
-  "dataRegisto": "2025-03-26",
-  "a3es": "",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/13995",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Neurociência Cognitiva, Afetiva e Social",
-  "grau": "Mestrado",
-  "uo": "EP — Escola de Psicologia",
-  "estado": "Acreditado com condições",
-  "proc": "NCE/25/2500354",
-  "dataDecisao": "2026-03-24",
-  "anos": 3,
-  "fim": "2029-07-31",
-  "registo": "R/A-Cr 73/2026",
-  "dataRegisto": "2026-04-30",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=27332",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/17654",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Psicologia Clínica e Psicoterapia de Adultos",
-  "grau": "Mestrado",
-  "uo": "EP — Escola de Psicologia",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1901005",
-  "dataDecisao": "2025-03-07",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 38/2021/AL01",
-  "dataRegisto": "2025-03-19",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26867",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/13860",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Psicologia Clínica na Infância e Adolescência",
-  "grau": "Mestrado",
-  "uo": "EP — Escola de Psicologia",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1901004",
-  "dataDecisao": "2025-03-07",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 99/2021/AL01",
-  "dataRegisto": "2025-03-24",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26866",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/13908",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Psicologia da Educação",
-  "grau": "Mestrado",
-  "uo": "EP — Escola de Psicologia",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1901006",
-  "dataDecisao": "2025-03-07",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 101/2021/AL01",
-  "dataRegisto": "2025-03-19",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26868",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/13890",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Psicologia do Trabalho e das Organizações",
-  "grau": "Mestrado",
-  "uo": "EP — Escola de Psicologia",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1901009",
-  "dataDecisao": "2025-03-07",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 100/2021/AL01",
-  "dataRegisto": "2025-03-19",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26870",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/13884",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Vitimologia e Comportamento Desviante",
-  "grau": "Mestrado",
-  "uo": "EP — Escola de Psicologia",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1901008",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 49/2021/AL01",
-  "dataRegisto": "2025-07-15",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26869",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/15511",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Psicologia",
-  "grau": "Doutoramento",
-  "uo": "EP — Escola de Psicologia",
-  "estado": "Acreditado",
-  "proc": "NCE/21/2100190",
-  "dataDecisao": "2022-06-02",
-  "anos": 6,
-  "fim": "2028-07-31",
-  "registo": "R/A-Cr 113/2022",
-  "dataRegisto": "2022-07-04",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=25588",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/7724",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Engenharia de Tecidos, Medicina Regenerativa e Células Estaminais",
-  "grau": "Doutoramento",
-  "uo": "I3Bs — Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos",
-  "estado": "Acreditado",
-  "proc": "ACEF/2526/0301712",
-  "dataDecisao": "2026-04-20",
-  "anos": 6,
-  "fim": "2032-07-31",
-  "registo": "R/A-Ef 2395/2011/AL01",
-  "dataRegisto": "2021-02-09",
-  "a3es": "",
-  "dges": "",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Arqueologia",
-  "grau": "Licenciatura",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202117",
-  "dataDecisao": "2025-05-07",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2412/2011/AL02",
-  "dataRegisto": "2025-05-28",
-  "a3es": "",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14760",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Ciências da Comunicação",
-  "grau": "Licenciatura",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202122",
-  "dataDecisao": "2025-03-07",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2418/2011/AL03",
-  "dataRegisto": "2026-04-02",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26047",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14187",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Geografia e Planeamento",
-  "grau": "Licenciatura",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2122/0502132",
-  "dataDecisao": "2022-05-18",
-  "anos": 6,
-  "fim": "2028-07-31",
-  "registo": "R/A-Ef 2431/2011/AL01",
-  "dataRegisto": "2022-06-23",
-  "a3es": "",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/3466",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "História",
-  "grau": "Licenciatura",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202127",
-  "dataDecisao": "2025-05-07",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2433/2011/AL02",
-  "dataRegisto": "2025-06-20",
-  "a3es": "",
-  "dges": "",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Proteção Civil e Gestão do Território",
-  "grau": "Licenciatura",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2122/1401096",
-  "dataDecisao": "2022-09-21",
-  "anos": 6,
-  "fim": "2028-07-31",
-  "registo": "R/A-Cr 297/2015/AL01",
-  "dataRegisto": "2023-03-30",
-  "a3es": "",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/17757",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Sociologia",
-  "grau": "Licenciatura",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2526/0302137",
-  "dataDecisao": "2026-05-12",
-  "anos": 6,
-  "fim": "2032-07-31",
-  "registo": "R/A-Ef 2443/2011/AL02",
-  "dataRegisto": "2026-05-21",
-  "a3es": "",
-  "dges": "",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Arqueologia",
-  "grau": "Mestrado",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202142",
-  "dataDecisao": "2025-02-12",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2448/2011/AL01",
-  "dataRegisto": "2023-04-06",
-  "a3es": "",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/11479",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Ciências da Comunicação",
-  "grau": "Mestrado",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202147",
-  "dataDecisao": "2025-03-07",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2453/2011/AL03",
-  "dataRegisto": "2025-04-01",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26050",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/14106",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Comunicação de Ciência",
-  "grau": "Mestrado",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/1700045",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Cr 72/2018/AL01",
-  "dataRegisto": "2019-08-14",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26771",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/6331",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Comunicação, Arte e Cultura",
-  "grau": "Mestrado",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2526/1000286",
-  "dataDecisao": "2026-03-24",
-  "anos": 6,
-  "fim": "2032-07-31",
-  "registo": "R/A-Cr 172/2011/AL02",
-  "dataRegisto": "2026-04-07",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=28655",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/17530",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Crime, Diferença e Desigualdade",
-  "grau": "Mestrado",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2526/1000291",
-  "dataDecisao": "2026-02-25",
-  "anos": 6,
-  "fim": "2032-07-31",
-  "registo": "R/A-Cr 35/2011/AL01",
-  "dataRegisto": "2022-06-23",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=28656",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/1277",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Geografia",
-  "grau": "Mestrado",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "PERA/2425/1800114",
-  "dataDecisao": "2025-12-10",
-  "anos": 3,
-  "fim": "2028-07-31",
-  "registo": "R/A-Cr 16/2019/AL01",
-  "dataRegisto": "2025-12-15",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=25888",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/16948",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "História",
-  "grau": "Mestrado",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0222182",
-  "dataDecisao": "2025-03-26",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2527/2011/AL01",
-  "dataRegisto": "2023-04-06",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26435",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/11518",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Investigação e Valorização do Património Cultural",
-  "grau": "Mestrado",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202162",
-  "dataDecisao": "2025-10-21",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-EF 2540/2011/AL04",
-  "dataRegisto": "2025-10-23",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26051",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/16583",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Media Arts",
-  "grau": "Mestrado",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "NCE/19/1900235",
-  "dataDecisao": "2020-07-21",
-  "anos": 6,
-  "fim": "2026-07-31",
-  "registo": "R/A-Cr 140/2021/AL01",
-  "dataRegisto": "2024-04-03",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=25105",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/11736",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Sociologia",
-  "grau": "Mestrado",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202142",
-  "dataDecisao": "2026-03-24",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2448/2011/AL01",
-  "dataRegisto": "2023-04-06",
-  "a3es": "",
-  "dges": "",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Arqueologia",
-  "grau": "Doutoramento",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "NCE/19/1900235",
-  "dataDecisao": "2024-01-23",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2376/2011/AL01",
-  "dataRegisto": "2023-03-30",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26052",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/17314",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Ciências da Comunicação",
-  "grau": "Doutoramento",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202187",
-  "dataDecisao": "2025-04-22",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2385/2011/AL01",
-  "dataRegisto": "2025-08-07",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26053",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/15733",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Estudos Culturais",
-  "grau": "Doutoramento",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2526/1600093",
-  "dataDecisao": "2026-01-21",
-  "anos": 6,
-  "fim": "2032-07-31",
-  "registo": "R/A-Cr 7/2017AL01",
-  "dataRegisto": "2023-04-29",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=28650",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/17302",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Geografia",
-  "grau": "Doutoramento",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2122/0502197",
-  "dataDecisao": "2023-01-11",
-  "anos": 6,
-  "fim": "2028-07-31",
-  "registo": "R/A-Ef 2404/2011/AL01",
-  "dataRegisto": "2023-03-07",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=22494",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/17318",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "História",
-  "grau": "Doutoramento",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2425/0202192",
-  "dataDecisao": "2025-02-12",
-  "anos": 6,
-  "fim": "2031-07-31",
-  "registo": "R/A-Ef 2405/2011/AL01",
-  "dataRegisto": "2023-02-21",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=26054",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/17319",
-  "origem": "excel",
-  "validado": "sim"
- },
- {
-  "nome": "Sociologia",
-  "grau": "Doutoramento",
-  "uo": "ICS — Instituto de Ciências Sociais",
-  "estado": "Acreditado",
-  "proc": "ACEF/2526/0302202",
-  "dataDecisao": "2026-03-24",
-  "anos": 6,
-  "fim": "2032-07-31",
-  "registo": "R/A-Ef 2409/2011/AL01",
-  "dataRegisto": "2022-04-29",
-  "a3es": "https://si.a3es.pt/sia3es/page?stage=ConsultaPublicaProcesso&processID=28654",
-  "dges": "https://www.dges.gov.pt/simges/public/www/cursos/5390",
-  "origem": "excel",
-  "validado": "sim"
- }
-];
+const CICLOS = __CICLOS__;
 
 const HOJE = new Date();
 const fmtPT = s => { if(!s || s==="—") return "—"; const d=new Date(s+"T00:00:00"); return d.toLocaleDateString("pt-PT",{day:"2-digit",month:"2-digit",year:"numeric"}); };
-const mesesRestantes = fim => { if(!fim) return null; const d=new Date(fim+"T00:00:00"); return Math.round((d-HOJE)/(1000*60*60*24*30.44)); };
+// meses que faltam, sem arredondar: arredondar aqui fazia um prazo vencido há
+// poucos dias dar -0, que não é menor do que zero, e passava por não vencido.
+// Quem mostra o valor é que o arredonda.
+const mesesRestantes = fim => { if(!fim) return null; const d=new Date(fim+"T00:00:00"); return (d-HOJE)/(1000*60*60*24*30.44); };
 const estadoClasse = e => /condi[cç]/i.test(e) ? "warn" : e==="Acreditado" ? "ok" : /avalia/i.test(e) ? "neutral" : "bad";
 
 document.getElementById("lastUpdate").textContent = fmtPT(META.atualizado);
@@ -1407,6 +512,9 @@ document.getElementById("inst").innerHTML = INSTITUCIONAL.map(i=>`
 const selUO=document.getElementById("fUO"), selGrau=document.getElementById("fGrau"), selEstado=document.getElementById("fEstado"), q=document.getElementById("q");
 [...new Set(CICLOS.map(c=>c.uo))].sort().forEach(v=>selUO.add(new Option(v.split(" — ")[0],v)));
 [...new Set(CICLOS.map(c=>c.grau))].sort().forEach(v=>selGrau.add(new Option(v,v)));
+const EXP18="__exp18";
+const expira18=c=>{const m=mesesRestantes(c.fim);return m!==null&&m>=0&&m<=18;};
+selEstado.add(new Option("A expirar em até 18 meses",EXP18));
 [...new Set(CICLOS.map(c=>c.estado))].sort().forEach(v=>selEstado.add(new Option(v,v)));
 
 let sortK="nome", sortDir=1;
@@ -1415,7 +523,7 @@ function filtrados(){
   return CICLOS.filter(c=>
     (!selUO.value||c.uo===selUO.value)&&
     (!selGrau.value||c.grau===selGrau.value)&&
-    (!selEstado.value||c.estado===selEstado.value)&&
+    (!selEstado.value||(selEstado.value===EXP18?expira18(c):c.estado===selEstado.value))&&
     (!t||[c.nome,c.proc,c.registo,c.uo].join(" ").toLowerCase().includes(t))
   ).sort((a,b)=>{
     let x=a[sortK]??"", y=b[sortK]??"";
@@ -1425,10 +533,11 @@ function filtrados(){
 }
 function barra(c){
   if(!c.fim){return `<span class="valtxt rest">—</span>`;}
-  const m=mesesRestantes(c.fim), totalM=c.anos*12;
+  const m=mesesRestantes(c.fim), totalM=c.anos*12, mm=Math.round(m);
   const pct=Math.max(0,Math.min(100,Math.round(m/totalM*100)));
   const cor=m<0?"var(--bad)":m<=18?"var(--warn)":"var(--ok)";
-  const lbl=m<0?`expirou ${fmtPT(c.fim)}`:`até ${fmtPT(c.fim)} <span class="rest">&middot; ${Math.floor(m/12)}a ${m%12}m</span>`;
+  // expirado: a barra fica a zero (é o que resta), por isso o aviso vai no texto
+  const lbl=m<0?`<b style="color:var(--bad)">expirou ${fmtPT(c.fim)}</b>`:`até ${fmtPT(c.fim)} <span class="rest">&middot; ${Math.floor(mm/12)}a ${mm%12}m</span>`;
   return `<div class="valtxt">${c.anos} anos &middot; ${lbl}</div><div class="valbar"><i style="width:${pct}%;background:${cor}"></i></div>`;
 }
 function render(){
@@ -1562,22 +671,58 @@ function barras(alvo, grupos, totalGeral, larguraRotulo){
   }).join("") || `<p class="csub">Sem dados para os filtros selecionados.</p>`;
 }
 
-// colunas: por defeito um só tom; realceAno pinta uma coluna em destaque e as restantes em contexto
-function colunas(alvo, pontos, realce){
+// colunas: por defeito um só tom; realce pinta uma coluna em destaque e as restantes em contexto.
+// legenda(n) devolve a frase da dica — cada gráfico de colunas conta uma coisa diferente.
+function colunas(alvo, pontos, realce, legenda){
   const max = Math.max(1, ...pontos.map(p=>p.n));
+  const frase = legenda || (q=>`${plural(q,"ciclo caduca","ciclos caducam")} neste ano`);
   alvo.innerHTML =
     `<div class="cols">` + pontos.map(p=>{
       const h = p.n/max*100;
       const destaque = !realce || p.rot===realce;
       const cor = destaque ? COR_SERIE : COR_CTX;
       const capCor = destaque ? "var(--ink)" : "var(--muted)";
-      const dica = `<b>${esc(p.rot)}</b><br>${plural(p.n,"ciclo caduca","ciclos caducam")} neste ano`;
+      const dica = `<b>${esc(p.rot)}</b><br>${frase(p.n)}`;
       return `<div class="col">
         <div class="bar" style="height:${p.n?Math.max(h,2):0}%;background:${cor}" tabindex="0" role="img"
              data-tip="${esc(dica)}" aria-label="${esc(p.rot)}: ${p.n} ciclos"
           >${p.n?`<span class="cap" style="color:${capCor}">${p.n}</span>`:""}</div></div>`;
     }).join("") + `</div>` +
     `<div class="colx">` + pontos.map(p=>`<div>${esc(p.rot)}</div>`).join("") + `</div>`;
+}
+
+/* mapa de calor: rampa sequencial de um só tom, totais na última linha e coluna.
+   linhas/cols = [{key, rot, title?}]; cont(chaveLinha, chaveCol) devolve a contagem;
+   dica(linha, col, n) devolve o HTML da dica. A contagem vai sempre escrita dentro
+   da célula: a cor ordena, mas nunca é ela a dar o valor. */
+function mapaCalor(alvo, linhas, cols, cont, dica){
+  if(!linhas.length || !cols.length){ alvo.innerHTML = `<p class="csub">Sem dados para os filtros selecionados.</p>`; return; }
+  let max=1;
+  linhas.forEach(l=>cols.forEach(c=>{ max=Math.max(max, cont(l.key,c.key)); }));
+  const totL = l => cols.reduce((s,c)=>s+cont(l.key,c.key),0);
+  const totC = c => linhas.reduce((s,l)=>s+cont(l.key,c.key),0);
+  const geral = linhas.reduce((s,l)=>s+totL(l),0);
+  const larg = `minmax(56px,auto) repeat(${cols.length},minmax(46px,1fr)) minmax(40px,auto)`;
+  let html = `<div class="heat" style="grid-template-columns:${larg}">`;
+  html += `<div class="cnr"></div>` + cols.map(c=>`<div class="hd">${esc(c.rot)}</div>`).join("") + `<div class="hd">Total</div>`;
+  linhas.forEach(l=>{
+    html += `<div class="rh" title="${esc(l.title||l.rot)}">${esc(l.rot)}</div>`;
+    cols.forEach(c=>{
+      const q = cont(l.key,c.key);
+      if(!q){ html += `<div class="cell zero" aria-label="${esc(l.rot)}, ${esc(c.rot)}: 0">–</div>`; return; }
+      const bg = corHeat(q,max), fg = tintaSobre(bg);
+      html += `<div class="cell" style="background:${bg};color:${fg}" tabindex="0" role="img"
+                 data-tip="${esc(dica(l,c,q))}" aria-label="${esc(l.rot)}, ${esc(c.rot)}: ${q}">${q}</div>`;
+    });
+    html += `<div class="cell tot">${totL(l)}</div>`;
+  });
+  html += `<div class="rh" style="font-weight:700">Total</div>`
+        + cols.map(c=>`<div class="cell tot">${totC(c)}</div>`).join("")
+        + `<div class="cell tot">${geral}</div></div>`;
+  html += `<div class="heatscale"><span>menos</span><div class="ramp">`
+        + RAMPA_SEQ.slice(1).map(c=>`<i style="background:${c}"></i>`).join("")
+        + `</div><span>mais ciclos</span></div>`;
+  alvo.innerHTML = html;
 }
 
 const HOJE0 = new Date(HOJE.getFullYear(),HOJE.getMonth(),HOJE.getDate());
@@ -1587,7 +732,52 @@ function renderGraficos(rows){
   const n = rows.length;
   const semDados = `<p class="csub">Sem dados para os filtros selecionados.</p>`;
 
-  /* 1) Situação da acreditação — composição do todo, ordenada pela gravidade.
+  /* ---------- 1. Retrato da oferta ---------- */
+
+  /* 1) Oferta por unidade orgânica — categorias nominais, ordenadas pela grandeza.
+     Um só tom: o comprimento da barra já diz quanto, e a UO é identidade, não escala. */
+  const alvoUO = document.getElementById("gUO");
+  const porUOtot = {};
+  rows.forEach(c=>{ porUOtot[c.uo]=(porUOtot[c.uo]||0)+1; });
+  const gruposUO = Object.entries(porUOtot).sort((a,b)=>b[1]-a[1] || (a[0]<b[0]?-1:1))
+    .map(([uo,q])=>({rot:uoSigla(uo), rotLongo:uo, total:q, partes:[{rot:uoSigla(uo), cor:COR_SERIE, n:q}]}));
+  if(!gruposUO.length){ alvoUO.innerHTML = semDados; }
+  else{
+    barras(alvoUO, gruposUO, n, "62px");
+    const maior = gruposUO[0];
+    alvoUO.insertAdjacentHTML("beforeend",
+      `<p class="chartnote">${plural(n,"ciclo abrangido","ciclos abrangidos")} em ${plural(gruposUO.length,"unidade orgânica","unidades orgânicas")}.`
+      + (gruposUO.length>1
+          ? ` A maior concentração está ${/^I/.test(maior.rotLongo)?"no":"na"} <b>${esc(maior.rotLongo)}</b>, com ${Math.round(maior.total/n*100)}% da oferta.`
+          : "")
+      + `</p>`);
+  }
+
+  /* 2) Repartição por grau — o grau é ordinal (1.º -> 3.º ciclo), por isso a cor
+     segue o nível. A identidade vai no rótulo de cada linha, nunca só na cor. */
+  const alvoGrau = document.getElementById("gGrau");
+  const grausPres = GRAUS_ORD.filter(g=>rows.some(c=>c.grau===g));
+  const outrosGrau = rows.filter(c=>!GRAUS_ORD.includes(c.grau)).length;
+  if(!grausPres.length && !outrosGrau){ alvoGrau.innerHTML = semDados; }
+  else{
+    const gruposGrau = grausPres.map(g=>{
+      const q = rows.filter(c=>c.grau===g).length;
+      return {rot:g, total:q, partes:[{rot:g, cor:corGrau(g), n:q}]};
+    });
+    if(outrosGrau) gruposGrau.push({rot:"Outro", rotLongo:"Outros graus", total:outrosGrau,
+      partes:[{rot:"Outros graus", cor:"#8C8C8C", n:outrosGrau}]});
+    barras(alvoGrau, gruposGrau, n, "116px");
+    const mest = rows.filter(c=>c.grau==="Mestrado"||c.grau==="Mestrado Integrado").length;
+    const dout = rows.filter(c=>c.grau==="Doutoramento").length;
+    alvoGrau.insertAdjacentHTML("beforeend",
+      `<p class="chartnote">Os mestrados, incluindo os integrados, são <b>${Math.round(mest/n*100)}%</b> da oferta abrangida`
+      + (dout ? `; os doutoramentos, <b>${Math.round(dout/n*100)}%</b>` : "")
+      + `.</p>`);
+  }
+
+  /* ---------- 2. Situação da acreditação ---------- */
+
+  /* 4) Situação da acreditação — composição do todo, ordenada pela gravidade.
      Barra de proporção + lista com os valores exatos. A lista mostra também as
      categorias a zero: saber que nenhum ciclo está por acreditar é informação,
      e um segmento ausente não a transmite. */
@@ -1629,7 +819,7 @@ function renderGraficos(rows){
       `<p class="chartnote">${frase}</p>`;
   }
 
-  /* 2) Termo da acreditação, por ano — ênfase no ano de pico */
+  /* 8) Termo da acreditação, por ano — ênfase no ano de pico */
   const anos = rows.map(c=>(c.fim||"").slice(0,4)).filter(Boolean);
   const alvoAno = document.getElementById("gAno");
   let anoPico=null, nPico=0;
@@ -1646,7 +836,7 @@ function renderGraficos(rows){
       `<p class="chartnote">Em <b>${anoPico}</b> caduca a acreditação de <b>${plural(nPico,"ciclo","ciclos")}</b>${n?` — ${Math.round(nPico/n*100)}% de toda a oferta abrangida`:""} — no mesmo ano. É o momento de maior pressão sobre o processo de renovação, muito acima dos ${plural(Math.round(outros/Math.max(1,pontos.length-1)),"ciclo","ciclos")} por ano dos restantes anos.</p>`);
   }
 
-  /* 3) Quem renova no ano de pico — barras de um só tom, por UO */
+  /* 9) Quem renova no ano de pico — barras de um só tom, por UO */
   const alvoPico = document.getElementById("gPico");
   const subPico = document.getElementById("gPicoSub");
   if(!anoPico){ alvoPico.innerHTML = semDados; subPico.textContent="Repartição, por unidade orgânica, dos ciclos que caducam no ano de pico."; }
@@ -1667,7 +857,7 @@ function renderGraficos(rows){
     alvoPico.insertAdjacentHTML("beforeend", `<p class="chartnote">${frase}</p>`);
   }
 
-  /* 4) Urgência — escalões ordenados, rampa ordinal (mais escuro = mais próximo) */
+  /* 10) Urgência — escalões ordenados, rampa ordinal (mais escuro = mais próximo) */
   const alvoUrg = document.getElementById("gUrg");
   // "Já expirou" = estado (mau); os 4 escalões futuros = rampa ordinal validada, mais urgente = mais escuro
   const ESC = [
@@ -1693,46 +883,18 @@ function renderGraficos(rows){
         : "Nenhum ciclo tem a acreditação a caducar no próximo ano."}${semData?` (${semData} sem data de termo.)`:""}</p>`);
   }
 
-  /* 5) Escola × grau — mapa de calor sequencial */
-  const alvoHeat = document.getElementById("gHeat");
-  const uos = [...new Set(rows.map(c=>c.uo))]
-    .map(uo=>({uo, sig:uoSigla(uo), tot:rows.filter(c=>c.uo===uo).length}))
+  /* 3) Escola × grau — mapa de calor sequencial */
+  const linhasUO = [...new Set(rows.map(c=>c.uo))]
+    .map(uo=>({key:uo, rot:uoSigla(uo), title:uo, tot:rows.filter(c=>c.uo===uo).length}))
     .sort((a,b)=>b.tot-a.tot);
   const graus = GRAUS_ORD.filter(g=>rows.some(c=>c.grau===g));
-  if(!uos.length || !graus.length){ alvoHeat.innerHTML = semDados; }
-  else{
-    const cont=(uo,g)=>rows.filter(c=>c.uo===uo&&c.grau===g).length;
-    let maxC=1; uos.forEach(u=>graus.forEach(g=>{maxC=Math.max(maxC,cont(u.uo,g));}));
-    const totGrau=g=>rows.filter(c=>c.grau===g).length;
-    const cols = `minmax(56px,auto) repeat(${graus.length},minmax(46px,1fr)) minmax(40px,auto)`;
-    let html = `<div class="heat" style="grid-template-columns:${cols}">`;
-    html += `<div class="cnr"></div>` + graus.map(g=>`<div class="hd">${esc(g.replace("Mestrado Integrado","Mestr. Int."))}</div>`).join("") + `<div class="hd">Total</div>`;
-    uos.forEach(u=>{
-      html += `<div class="rh" title="${esc(u.uo)}">${esc(u.sig)}</div>`;
-      graus.forEach(g=>{
-        const q=cont(u.uo,g);
-        if(q===0){ html += `<div class="cell zero" aria-label="${esc(u.sig)}, ${esc(g)}: 0">–</div>`; }
-        else{
-          const bg=corHeat(q,maxC), fg=tintaSobre(bg);
-          const dica=`<b>${q} ${q===1?"ciclo":"ciclos"}</b><br>${esc(g)} &middot; ${esc(u.uo)}`;
-          html += `<div class="cell" style="background:${bg};color:${fg}" tabindex="0" role="img"
-                     data-tip="${esc(dica)}" aria-label="${esc(u.sig)}, ${esc(g)}: ${q}">${q}</div>`;
-        }
-      });
-      html += `<div class="cell tot">${u.tot}</div>`;
-    });
-    html += `<div class="rh" style="font-weight:700">Total</div>` +
-      graus.map(g=>`<div class="cell tot">${totGrau(g)}</div>`).join("") +
-      `<div class="cell tot">${n}</div>`;
-    html += `</div>`;
-    html += `<div class="heatscale"><span>menos</span><div class="ramp">` +
-      RAMPA_SEQ.slice(1).map(c=>`<i style="background:${c}"></i>`).join("") +
-      `</div><span>mais ciclos</span></div>`;
-    alvoHeat.innerHTML = html;
-  }
+  mapaCalor(document.getElementById("gHeat"), linhasUO,
+    graus.map(g=>({key:g, rot:g.replace("Mestrado Integrado","Mestr. Int.")})),
+    (uo,g)=>rows.filter(c=>c.uo===uo&&c.grau===g).length,
+    (l,c,q)=>`<b>${plural(q,"ciclo","ciclos")}</b><br>${esc(c.key)} &middot; ${esc(l.key)}`);
 
-  /* 6) Solidez — medidor do prazo máximo. A repartição por estado saiu daqui:
-     é o assunto do gráfico 1), e repeti-la punha a mesma contagem em dois
+  /* 5) Solidez — medidor do prazo máximo. A repartição por estado saiu daqui:
+     é o assunto do gráfico 4), e repeti-la punha a mesma contagem em dois
      sítios. Este cartão trata só da duração do prazo atribuído. */
   const plenos = rows.filter(c=>Number(c.anos)===6).length;
   const pct = n ? Math.round(plenos/n*100) : 0;
@@ -1746,7 +908,112 @@ function renderGraficos(rows){
       curtos.length ? ` ${curtos.length===1?"O restante tem prazo":"Os restantes "+curtos.length+" têm prazos"} mais curto${curtos.length===1?"":"s"} (${curtos[0]===curtos[curtos.length-1]?`${curtos[0]} anos`:`${curtos[0]} a ${curtos[curtos.length-1]} anos`}), sinal de condições a suprir ou de acreditação preliminar.` : ""}</p>`
     : semDados;
 
-  /* 7) Próximas a expirar — lista ordenada */
+  /* 6) Ciclos sob acompanhamento — os que não têm acreditação plena pelo prazo
+     máximo. Uma lista nomeada, e não um gráfico: são poucos casos e o que
+     interessa é saber quais são. O motivo vai sempre escrito, nunca só na cor. */
+  const alvoVig = document.getElementById("gVig");
+  const vigiados = rows
+    .filter(c=>EST_CATS[1].teste(c.estado||"") || (c.anos && Number(c.anos)!==6))
+    .map(c=>{
+      const cond = EST_CATS[1].teste(c.estado||"");
+      const anos = Number(c.anos) || null;
+      const motivos = [];
+      if(cond) motivos.push("condições a suprir");
+      if(anos && anos!==6) motivos.push(`prazo de ${plural(anos,"ano","anos")}, e não de 6`);
+      return {c, cond, anos, motivo:motivos.join(" · ")};
+    })
+    .sort((a,b)=>(b.cond-a.cond) || ((a.anos??99)-(b.anos??99)) || (a.c.nome<b.c.nome?-1:1));
+  if(!n){ alvoVig.innerHTML = semDados; }
+  else if(!vigiados.length){
+    alvoVig.innerHTML = `<div class="heroN">0<small>sob acompanhamento</small></div>`
+      + `<p class="csub" style="margin-top:9px">Todos os ${n} ciclos abrangidos têm acreditação plena pelo prazo máximo de 6 anos.</p>`;
+  }
+  else{
+    alvoVig.innerHTML =
+      `<div class="heroN">${vigiados.length}<small>de ${n} ciclos</small></div>`
+      + `<ol class="watch" style="margin-top:14px">` + vigiados.map(v=>`
+        <li>
+          <span class="wn">${esc(v.c.nome)}</span>
+          <span class="wu">${esc(v.c.grau)} &middot; ${esc(uoSigla(v.c.uo))} &middot; até ${fmtPT(v.c.fim)}</span>
+          <span class="wd wmot">${esc(v.motivo)}</span>
+          <span class="wr" style="background:var(--warn-soft);color:var(--warn)">${v.cond?"condicionada":`${v.anos} anos`}</span>
+        </li>`).join("") + `</ol>`
+      + `<p class="chartnote">${plural(vigiados.length,"ciclo","ciclos")} — ${Math.round(vigiados.length/n*100)}% da oferta abrangida — ${vigiados.length===1?"volta":"voltam"} a ser apreciad${vigiados.length===1?"o":"os"} antes do ciclo ordinário de seis anos.</p>`;
+  }
+
+  /* 7) Em que ponto vai o prazo — fração já decorrida do prazo atribuído a cada
+     ciclo. Escalões ordenados na rampa ordinal (mais escuro = mais adiantado);
+     o prazo esgotado sai da rampa e veste a cor de estado, porque já não é uma
+     fase do prazo mas uma falha. Só entram ciclos com prazo e data de termo. */
+  const alvoFase = document.getElementById("gFase");
+  const comPrazo = rows.filter(c=>c.fim && Number(c.anos)>0);
+  const decorrido = c => {
+    const total = Number(c.anos)*12, restam = mesesAte(c.fim);
+    return Math.max(0, Math.min(1, (total-restam)/total));
+  };
+  const FASES = [
+    {rot:"Menos de 1/3",   cor:RAMPA_GRAU[0], f:x=>x<1/3},
+    {rot:"1/3 a 2/3",      cor:RAMPA_GRAU[1], f:x=>x>=1/3&&x<2/3},
+    {rot:"Mais de 2/3",    cor:RAMPA_GRAU[2], f:x=>x>=2/3&&x<1},
+    {rot:"Prazo esgotado", cor:"var(--bad)",  f:x=>x>=1},
+  ];
+  if(!comPrazo.length){ alvoFase.innerHTML = semDados; }
+  else{
+    const fr = comPrazo.map(decorrido);
+    const media = Math.round(fr.reduce((s,x)=>s+x,0)/fr.length*100);
+    alvoFase.innerHTML = `<div class="heroN">${media}%<small>do prazo já decorrido, em média</small></div>`;
+    const cx = document.createElement("div");
+    cx.style.marginTop = "16px";
+    alvoFase.appendChild(cx);
+    barras(cx, FASES.map(e=>{
+      const q = fr.filter(e.f).length;
+      return {rot:e.rot, total:q, partes:[{rot:e.rot, cor:e.cor, n:q}]};
+    }).filter(g=>g.total>0), comPrazo.length, "112px");
+    const adiantados = fr.filter(x=>x>=2/3).length;
+    alvoFase.insertAdjacentHTML("beforeend",
+      `<p class="chartnote">${adiantados
+        ? `<b>${plural(adiantados,"ciclo","ciclos")}</b> já ${adiantados===1?"ultrapassou":"ultrapassaram"} dois terços do prazo atribuído.`
+        : "Nenhum ciclo ultrapassou ainda dois terços do prazo atribuído."}`
+      + (comPrazo.length<n ? ` Ficam de fora ${plural(n-comPrazo.length,"ciclo","ciclos")} sem prazo ou sem data de termo.` : "")
+      + `</p>`);
+  }
+
+  /* 11) Carga acumulada — a mesma série do gráfico 8), somada. Responde a «até
+     quando está a oferta coberta», que a contagem ano a ano não responde. */
+  const alvoAcum = document.getElementById("gAcum");
+  if(!anos.length){ alvoAcum.innerHTML = semDados; }
+  else{
+    const y0=Math.min(...anos.map(Number)), y1=Math.max(...anos.map(Number));
+    let ac=0; const ptsAc=[];
+    for(let a=y0;a<=y1;a++){ ac += anos.filter(x=>+x===a).length; ptsAc.push({rot:String(a), n:ac}); }
+    const base = anos.length;
+    const metade = ptsAc.find(p=>p.n/base>=0.5);
+    colunas(alvoAcum, ptsAc, metade?.rot,
+      q=>`${plural(q,"ciclo","ciclos")} com a acreditação caducada &mdash; ${Math.round(q/base*100)}% da oferta com data de termo`);
+    alvoAcum.insertAdjacentHTML("beforeend",
+      `<p class="chartnote">${metade
+        ? `É em <b>${metade.rot}</b> que a oferta por renovar passa de metade: no fim desse ano já terá caducado a acreditação de <b>${metade.n} dos ${base} ciclos</b> com data de termo (${Math.round(metade.n/base*100)}%). `
+        : ""}No fim de <b>${y1}</b> nenhuma das acreditações hoje em vigor se mantém.</p>`);
+  }
+
+  /* 12) Calendário por unidade orgânica — o mesmo calendário do gráfico 8),
+     desdobrado por escola: é a agenda de trabalho de cada uma. */
+  const alvoCal = document.getElementById("gCal");
+  const anosCal = [...new Set(anos)].sort();
+  mapaCalor(alvoCal, linhasUO, anosCal.map(a=>({key:a, rot:a})),
+    (uo,a)=>rows.filter(c=>c.uo===uo&&(c.fim||"").slice(0,4)===a).length,
+    (l,c,q)=>`<b>${plural(q,"ciclo","ciclos")}</b><br>a renovar em ${esc(c.key)} &middot; ${esc(l.key)}`);
+  if(anosCal.length && linhasUO.length){
+    let pior={q:0};
+    linhasUO.forEach(l=>anosCal.forEach(a=>{
+      const q=rows.filter(c=>c.uo===l.key&&(c.fim||"").slice(0,4)===a).length;
+      if(q>pior.q) pior={q, uo:l, ano:a};
+    }));
+    alvoCal.insertAdjacentHTML("beforeend",
+      `<p class="chartnote">O maior encargo de uma só unidade orgânica num só ano é ${/^I/.test(pior.uo.key)?"o do":"o da"} <b>${esc(pior.uo.key)}</b> em <b>${pior.ano}</b>, com <b>${plural(pior.q,"processo","processos")}</b> a preparar.</p>`);
+  }
+
+  /* 13) Próximas a expirar — lista ordenada */
   const alvoWatch = document.getElementById("gWatch");
   const proximos = rows.filter(c=>c.fim).sort((a,b)=>a.fim<b.fim?-1:a.fim>b.fim?1:0).slice(0,7);
   if(!proximos.length){ alvoWatch.innerHTML = `<li class="csub" style="border:none">Sem datas de termo para os filtros selecionados.</li>`; }
@@ -1754,7 +1021,11 @@ function renderGraficos(rows){
     alvoWatch.innerHTML = proximos.map(c=>{
       const m=mesesAte(c.fim);
       const urgente = m!==null && m<=18;
-      const restante = m===null ? "—" : m<0 ? "expirou" : `${Math.floor(m/12)}a ${Math.round(m%12)}m`;
+      // arredondar primeiro o total de meses: arredondar o resto dava "0a 12m".
+      // o teste de expirado usa o valor por arredondar — Math.round(-0,2) dá -0,
+      // que não é menor do que zero, e um prazo já vencido passaria por vencer.
+      const mm = m===null ? null : Math.round(m);
+      const restante = m===null ? "—" : m<0 ? "expirou" : `${Math.floor(mm/12)}a ${mm%12}m`;
       const cls = m!==null&&m<0 ? "bad" : urgente ? "warn" : "ok";
       const soft = {bad:"var(--bad-soft)",warn:"var(--warn-soft)",ok:"var(--ok-soft)"}[cls];
       const ink  = {bad:"var(--bad)",warn:"var(--warn)",ok:"var(--ok)"}[cls];
@@ -1769,7 +1040,7 @@ function renderGraficos(rows){
 
   /* ---------- indicadores complementares ---------- */
 
-  /* 8) Tipo de processo — categorias nominais, um só tom (o comprimento
+  /* 14) Tipo de processo — categorias nominais, um só tom (o comprimento
      da barra já transporta a grandeza) */
   const alvoProc = document.getElementById("gProc");
   const tipos = PROC_TIPOS.map(t=>({...t, n:rows.filter(c=>procTipo(c.proc)===t.sig).length}));
@@ -1790,7 +1061,26 @@ function renderGraficos(rows){
         ? ` ${plural(novos,"ciclo","ciclos")} ${novos===1?"entrou":"entraram"} por acreditação prévia, isto é, oferta criada de novo.` : ""}</p>`);
   }
 
-  /* 9) Da decisão ao registo — escalões ordenados, rampa ordinal.
+  /* 15) Ano da deliberação que sustenta a acreditação em vigor. Mede o esforço
+     de avaliação já feito, ao contrário do gráfico 8), que mede o que falta
+     fazer. Ênfase no ano de maior atividade; os restantes ficam em contexto. */
+  const alvoDec = document.getElementById("gDecisao");
+  const anosDec = rows.map(c=>(c.dataDecisao||"").slice(0,4)).filter(a=>/^\d{4}$/.test(a));
+  if(!anosDec.length){ alvoDec.innerHTML = semDados; }
+  else{
+    const d0=Math.min(...anosDec.map(Number)), d1=Math.max(...anosDec.map(Number));
+    const pts=[];
+    for(let a=d0;a<=d1;a++) pts.push({rot:String(a), n:anosDec.filter(x=>+x===a).length});
+    const picoD = pts.reduce((m,p)=>p.n>m.n?p:m, pts[0]);
+    colunas(alvoDec, pts, picoD.rot, q=>`${plural(q,"decisão","decisões")} neste ano`);
+    const recentes = anosDec.filter(a=>+a >= HOJE.getFullYear()-2).length;
+    alvoDec.insertAdjacentHTML("beforeend",
+      `<p class="chartnote">A acreditação em vigor de <b>${plural(picoD.n,"ciclo","ciclos")}</b> foi decidida em <b>${picoD.rot}</b>, o ano de maior atividade. `
+      + `No conjunto, <b>${Math.round(recentes/anosDec.length*100)}%</b> das decisões em vigor são dos últimos três anos${
+          anosDec.length<n ? ` (${plural(n-anosDec.length,"ciclo","ciclos")} sem data de decisão registada).` : "."}</p>`);
+  }
+
+  /* 16) Da decisão ao registo — escalões ordenados, rampa ordinal.
      Só entram os ciclos cujo registo é POSTERIOR à decisão: nos processos de
      renovação o número de registo já vem de trás e a data que consta é a
      desse registo anterior, pelo que a diferença não mediria nada. */
@@ -1826,7 +1116,31 @@ function renderGraficos(rows){
       + `</p>`);
   }
 
-  /* 10) Completude — a escala é sempre o total de ciclos, nunca o campo mais
+  /* 17) Oferta criada de novo — os ciclos cuja acreditação em vigor veio de um
+     pedido de acreditação prévia (NCE). Lista nomeada e não gráfico: o número
+     já está no gráfico 14), e o que falta aqui é saber de que oferta se trata. */
+  const alvoNova = document.getElementById("gNova");
+  const novos = rows.filter(c=>procTipo(c.proc)==="NCE")
+    .sort((a,b)=>String(b.dataDecisao||"").localeCompare(String(a.dataDecisao||"")));
+  if(!n){ alvoNova.innerHTML = semDados; }
+  else if(!novos.length){
+    alvoNova.innerHTML = `<div class="heroN">0<small>ciclos criados de novo</small></div>`
+      + `<p class="csub" style="margin-top:9px">Neste conjunto, toda a acreditação em vigor resulta da avaliação de oferta já em funcionamento.</p>`;
+  }
+  else{
+    alvoNova.innerHTML =
+      `<div class="heroN">${novos.length}<small>de ${n} ciclos &middot; ${Math.round(novos.length/n*100)}% da oferta abrangida</small></div>`
+      + `<ol class="watch dois" style="margin-top:14px">` + novos.map(c=>`
+        <li>
+          <span class="wn">${esc(c.nome)}</span>
+          <span class="wu">${esc(c.grau)} &middot; ${esc(uoSigla(c.uo))}</span>
+          <span class="wd">${esc(c.proc)}</span>
+          <span class="wr" style="background:var(--neutral-soft);color:var(--neutral)">${(c.dataDecisao||"").slice(0,4)||"—"}</span>
+        </li>`).join("") + `</ol>`
+      + `<p class="chartnote">Ordenados pela data da decisão, do mais recente para o mais antigo. O ano no canto é o da deliberação da A3ES que criou o ciclo.</p>`;
+  }
+
+  /* 18) Completude — a escala é sempre o total de ciclos, nunca o campo mais
      preenchido: senão, com todos os campos igualmente incompletos, as barras
      apareceriam cheias e a falha desaparecia do gráfico. */
   const alvoCompl = document.getElementById("gCompl");
@@ -1860,9 +1174,38 @@ function renderGraficos(rows){
             }${faltam.every(f=>f.k==="a3es"||f.k==="dges")
                 ? " — que dependem de a hiperligação constar da tabela de origem, e não de dados em falta na A3ES ou na DGES." : "."}`}</p>`;
   }
+
+  /* Leitura rápida — o que os gráficos abaixo dizem, em três frases. Escreve-se
+     no fim porque reaproveita os valores já apurados acima, e acompanha os
+     filtros: o texto refere-se sempre ao conjunto que está a ser mostrado. */
+  const alvoLead = document.getElementById("gLead");
+  if(!n){
+    alvoLead.innerHTML = `<span class="leadlab">Leitura rápida</span><p>Não há ciclos que correspondam aos filtros selecionados.</p>`;
+  }
+  else{
+    const plena2 = rows.filter(r=>EST_CATS[0].teste(r.estado||"")).length;
+    const mest2  = rows.filter(c=>c.grau==="Mestrado"||c.grau==="Mestrado Integrado").length;
+    const urg2   = contagens[0]+contagens[1];
+    const filtrado = n < CICLOS.length;
+    const p1 = `${filtrado?"Nos filtros selecionados estão":"Estão abrangidos"} <b>${plural(n,"ciclo de estudos","ciclos de estudos")}</b>`
+      + ` em <b>${plural(gruposUO.length,"unidade orgânica","unidades orgânicas")}</b>, `
+      + `<b>${Math.round(mest2/n*100)}%</b> dos quais mestrados.`;
+    const p2 = `<b>${Math.round(plena2/n*100)}%</b> têm acreditação plena e <b>${pct}%</b> o prazo máximo de seis anos. `
+      + (vigiados.length
+          ? `${plural(vigiados.length,"ciclo fica","ciclos ficam")} sob acompanhamento, por ter${vigiados.length===1?"":"em"} condições a suprir ou prazo reduzido.`
+          : `Nenhum ciclo tem condições a suprir ou prazo reduzido.`);
+    const p3 = anoPico
+      ? `O calendário de renovações concentra-se em <b>${anoPico}</b>, com <b>${plural(nPico,"acreditação a caducar","acreditações a caducar")}</b> — ${Math.round(nPico/n*100)}% do total. `
+        + (urg2 ? `A prazo imediato, <b>${plural(urg2,"ciclo caduca","ciclos caducam")}</b> no espaço de um ano.`
+                : `Nenhuma caduca no próximo ano.`)
+      : `Não há datas de termo registadas neste conjunto.`;
+    alvoLead.innerHTML = `<span class="leadlab">Leitura rápida</span><p>${p1}</p><p>${p2}</p><p>${p3}</p>`;
+  }
 }
 
 /* --- alternador de vista --- */
+// o número no separador conta os cartões que lá estão, para não desacertar
+document.getElementById("nGraf").textContent = document.querySelectorAll("#viewGraf .card").length;
 const tabLista=document.getElementById("tabLista"), tabGraf=document.getElementById("tabGraf");
 let vista="lista";
 function mudarVista(v){
